@@ -1,0 +1,116 @@
+[
+  {
+    "id": "ALERT-2024-001",
+    "timestamp": "2024-12-15T03:22:41Z",
+    "source": "edr",
+    "title": "Suspicious PowerShell Execution with Encoded Command",
+    "description": "Endpoint detection rule triggered: PowerShell.exe launched with -EncodedCommand parameter containing Base64-encoded payload. Process spawned from Microsoft Word (WINWORD.EXE). User: jsmith@corp.local. Host: WKSTN-FIN-042.",
+    "severity_raw": "high",
+    "indicators": {
+      "process": "powershell.exe -EncodedCommand <base64_payload>",
+      "parent_process": "WINWORD.EXE",
+      "user": "jsmith@corp.local",
+      "source_ip": "10.0.15.42",
+      "command_line_length": 4823
+    },
+    "affected_asset": {
+      "hostname": "WKSTN-FIN-042",
+      "ip": "10.0.15.42",
+      "department": "Finance",
+      "os": "Windows 11",
+      "criticality": "high"
+    },
+    "raw_event": {"event_id": 4688, "detection_rule": "RULE-PS-ENCODED-001", "mitre_ref": "T1059.001"}
+  },
+  {
+    "id": "ALERT-2024-002",
+    "timestamp": "2024-12-15T08:45:12Z",
+    "source": "network",
+    "title": "Potential Data Exfiltration - Unusual Outbound Transfer Volume",
+    "description": "Network monitor detected 4.2GB outbound transfer to external IP 185.234.72.19 over port 443 from internal server DB-PROD-01 during non-business hours. Transfer duration: 47 minutes. Destination not in approved external endpoints list.",
+    "severity_raw": "critical",
+    "indicators": {
+      "destination_ip": "185.234.72.19",
+      "destination_port": 443,
+      "source_ip": "10.0.50.10",
+      "bytes_transferred": 4509715660,
+      "duration_minutes": 47,
+      "protocol": "TLS"
+    },
+    "affected_asset": {
+      "hostname": "DB-PROD-01",
+      "ip": "10.0.50.10",
+      "department": "Infrastructure",
+      "os": "Ubuntu 22.04",
+      "criticality": "critical",
+      "data_classification": "confidential"
+    },
+    "raw_event": {"flow_id": "FL-9982341", "detection_rule": "RULE-NET-EXFIL-002", "baseline_daily_egress_gb": 0.3}
+  },
+  {
+    "id": "ALERT-2024-003",
+    "timestamp": "2024-12-15T11:15:33Z",
+    "source": "identity",
+    "title": "Multiple Failed Authentication Attempts Followed by Success",
+    "description": "Azure AD detected 47 failed login attempts for user admin@contoso.com from IP 91.234.56.78 over 12 minutes, followed by successful authentication. MFA was not triggered. Source geolocated to region inconsistent with user's normal activity.",
+    "severity_raw": "high",
+    "indicators": {
+      "target_user": "admin@contoso.com",
+      "source_ip": "91.234.56.78",
+      "failed_attempts": 47,
+      "time_window_minutes": 12,
+      "success_after_failures": true,
+      "mfa_triggered": false,
+      "geo_anomaly": true
+    },
+    "affected_asset": {
+      "user": "admin@contoso.com",
+      "account_type": "privileged",
+      "department": "IT Administration",
+      "criticality": "critical"
+    },
+    "raw_event": {"event_type": "SignInActivity", "risk_level": "high", "detection_rule": "RULE-ID-BRUTEFORCE-001", "normal_geo": "US-TX", "actual_geo": "RU-MOW"}
+  },
+  {
+    "id": "ALERT-2024-004",
+    "timestamp": "2024-12-15T14:02:19Z",
+    "source": "email",
+    "title": "Phishing Email with Malicious Attachment Delivered",
+    "description": "Email gateway detected suspicious attachment (Invoice_Dec2024.xlsm) containing macros delivered to 3 users in the Accounting department. Sender domain registered 48 hours ago. Similar campaign reported by threat intel feeds.",
+    "severity_raw": "medium",
+    "indicators": {
+      "sender": "billing@acc0unting-services.com",
+      "sender_domain_age_days": 2,
+      "attachment_name": "Invoice_Dec2024.xlsm",
+      "attachment_hash": "a1b2c3d4e5f6789012345678abcdef01",
+      "recipients_count": 3,
+      "macro_enabled": true,
+      "threat_intel_match": true
+    },
+    "affected_asset": {"department": "Accounting", "criticality": "medium"},
+    "raw_event": {"message_id": "MSG-2024-88421", "detection_rule": "RULE-EMAIL-PHISH-003", "campaign_id": "CAMP-INVOICE-DEC"}
+  },
+  {
+    "id": "ALERT-2024-005",
+    "timestamp": "2024-12-15T16:30:55Z",
+    "source": "cloud",
+    "title": "Unusual IAM Role Assumption from Unknown IP",
+    "description": "AWS CloudTrail detected AssumeRole API call for role 'ProductionDBAdmin' from IP 203.0.113.45 not associated with any known VPN or corporate egress. Role provides full access to production RDS instances.",
+    "severity_raw": "high",
+    "indicators": {
+      "source_ip": "203.0.113.45",
+      "role_arn": "arn:aws:iam::123456789012:role/ProductionDBAdmin",
+      "api_call": "sts:AssumeRole",
+      "permissions": ["rds:*", "s3:GetObject", "secretsmanager:GetSecretValue"],
+      "known_egress_ip": false
+    },
+    "affected_asset": {
+      "aws_account": "123456789012",
+      "region": "us-east-1",
+      "resource_type": "IAM Role",
+      "criticality": "critical",
+      "data_access": "production_databases"
+    },
+    "raw_event": {"event_name": "AssumeRole", "event_source": "sts.amazonaws.com", "detection_rule": "RULE-CLOUD-IAM-004"}
+  }
+]
