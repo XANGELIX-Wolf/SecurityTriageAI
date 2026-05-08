@@ -148,11 +148,16 @@ SecurityTriageAI/
 
 ## 🧑‍🏫 About This Project
 
-This project was built by a security practitioner who has spent years watching smart people struggle with the same challenge: **you need expert-level judgment at machine speed**.
+**Built by [Devin Garrett](https://linkedin.com/in/devingarrett)** — Security AI systems builder with 10+ years in cybersecurity operations, Python automation, and cloud infrastructure. Currently building production-grade agentic triage systems with AWS Bedrock, LangChain, and LLM-as-judge evaluation.
+
+This project was built by a practitioner who has spent years watching smart people struggle with the same challenge: **you need expert-level judgment at machine speed**.
 
 It's structured as a curriculum rather than just a codebase because reading code without context teaches syntax. Building with explained intent teaches you to *think* like an AI engineer.
 
 The "free" constraint is intentional. Security teams often can't spin up cloud AI without budget approval. This curriculum proves you don't need to — you can learn the entire stack locally, then plug in a cloud provider when it counts.
+
+- 🔗 LinkedIn: [linkedin.com/in/devingarrett](https://linkedin.com/in/devingarrett)
+- 🐙 GitHub: [github.com/XANGELIX-Wolf](https://github.com/XANGELIX-Wolf)
 
 ---
 
