@@ -14,7 +14,7 @@ Usage:
 """
 
 import os
-from typing import Literal
+from typing import Literal, Optional
 
 from langchain_core.language_models import BaseChatModel
 
@@ -22,7 +22,7 @@ Provider = Literal["ollama", "groq", "bedrock"]
 
 
 def get_llm(
-    provider: Provider | None = None,
+    provider: Optional[Provider] = None,
     temperature: float = 0.1,
     max_tokens: int = 4096,
 ) -> BaseChatModel:
